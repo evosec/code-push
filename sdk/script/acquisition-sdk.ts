@@ -58,6 +58,40 @@ export class AcquisitionStatus {
     public static DeploymentFailed = "DeploymentFailed";
 }
 
+export class Metadata {
+    
+    // encrypted  
+    uniqueId: string;
+	mac: string;
+	serialNumber: string;
+
+	// normal
+	systemName: string;
+	totalMemory: number;
+
+	appVersion: string;
+	lastUpdate: Date;
+
+	// encrypted
+	deviceName: string;
+	ip: string;
+
+	// normal
+	freeDiskSpace: number;
+
+	// Android
+	gps: boolean;
+	network: boolean;
+	passive: boolean;
+
+	// iOS
+	headingAvailable: boolean;
+	rangingAvailable: boolean;
+	locationServiceEnabled: boolean;
+    significantLocationChangeMonitoringAvailable: boolean;
+    [key: string]: any;
+}
+
 export class AcquisitionManager {
     private _appVersion: string;
     private _clientUniqueId: string;
@@ -229,6 +263,11 @@ export class AcquisitionManager {
                 callback(/*error*/ null, /*not used*/ null);
             }
         });
+    }
+
+    public reportMetadata(metadata: Metadata) {
+        var url: string = this._serverUrl + "meta/";
+        this._httpRequester.request(Http.Verb.POST, url, JSON.stringify(metadata), null);
     }
 }
 
