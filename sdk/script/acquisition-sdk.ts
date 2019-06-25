@@ -62,33 +62,35 @@ export interface Metadata {
     
     // encrypted  
     uniqueId: string;
-	mac: string;
-	serialNumber: string;
+	mac?: string;
+	serialNumber?: string;
 
 	// normal
-	systemName: string;
-	totalMemory: number;
+	systemName?: string;
+	totalMemory?: number;
 
-	appVersion: string;
-	lastUpdate: Date;
+	appVersion?: string;
+	lastUpdate?: Date;
 
 	// encrypted
-	deviceName: string;
-	ip: string;
+	deviceName?: string;
+	ip?: string;
 
 	// normal
-	freeDiskSpace: number;
+	freeDiskSpace?: number;
 
-	// Android
-	gps: boolean;
-	network: boolean;
-	passive: boolean;
-
-	// iOS
-	headingAvailable: boolean;
-	rangingAvailable: boolean;
-	locationServiceEnabled: boolean;
-    significantLocationChangeMonitoringAvailable: boolean;
+    availableLocationProviders? : {
+        // Android
+        gps?: boolean;
+        network?: boolean;
+        passive?: boolean;
+    
+        // iOS
+        headingAvailable?: boolean;
+        rangingAvailable?: boolean;
+        locationServiceEnabled?: boolean;
+        significantLocationChangeMonitoringAvailable?: boolean;
+    }
     [key: string]: any;
 }
 
