@@ -58,7 +58,7 @@ export class AcquisitionStatus {
     public static DeploymentFailed = "DeploymentFailed";
 }
 
-export class Metadata {
+export interface Metadata {
     
     // encrypted  
     uniqueId: string;
