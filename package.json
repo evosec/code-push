@@ -2,8 +2,8 @@
   "scripts": {
     "clean": "rimraf package-lock.json && rimraf cli/package-lock.json && rimraf skd/node_modules && rimraf cli/node_modules && rimraf node_modules",
     "install:full": "npm i && gulp install && gulp build && gulp link",
-    "build:cli": "cd cli && gulp",
-    "build:sdk": "cd sdk && gulp",
+    "build:cli": "cd cli && gulp && tsc",
+    "build:sdk": "cd sdk && gulp && tsc",
     "build": "npm run build:cli && npm run build:sdk"
   },
   "devDependencies": {
