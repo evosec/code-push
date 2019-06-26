@@ -1,4 +1,11 @@
 {
+  "scripts": {
+    "clean": "rimraf package-lock.json && rimraf cli/package-lock.json && rimraf skd/node_modules && rimraf cli/node_modules && rimraf node_modules",
+    "install:full": "npm i && gulp install && gulp build && gulp link",
+    "build:cli": "cd cli && gulp",
+    "build:sdk": "cd sdk && gulp",
+    "build": "npm run build:cli && npm run build:sdk"
+  },
   "devDependencies": {
     "chmod": "^0.2.1",
     "del": "^1.2.0",
@@ -23,6 +30,7 @@
     "node-libs-browser": "^0.5.2",
     "node-rsa": "^0.2.24",
     "require-all": "^1.1.0",
+    "rimraf": "^2.6.3",
     "run-sequence": "^1.1.2",
     "sinon": "1.16.0",
     "superagent-mock": "^3.7.0",
