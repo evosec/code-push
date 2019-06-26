@@ -44,3 +44,16 @@ definitions/generated/
 # JSON Storage persisted file
 JsonStorage.json
 .idea/
+
+# Custom ignores
+sdk/script/*.js
+sdk/script/*.js.map
+sdk/test/*.js
+sdk/test/*.js.map
+
+cli/script/**/*.js
+cli/script/**/*.js.map
+cli/definitions/**/*.js
+cli/definitions/**/*.js.map
+cli/test/**/*.js
+cli/test/**/*.js.map
