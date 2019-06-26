@@ -46,8 +46,8 @@ JsonStorage.json
 .idea/
 
 # Custom ignores
-sdk/script/*.js
-sdk/script/*.js.map
+# sdk/script/*.js
+# sdk/script/*.js.map
 sdk/test/*.js
 sdk/test/*.js.map
 
