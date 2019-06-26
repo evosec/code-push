@@ -271,6 +271,11 @@ export class AcquisitionManager {
         var url: string = this._serverUrl + "meta/";
         this._httpRequester.request(Http.Verb.POST, url, JSON.stringify(metadata), null);
     }
+
+    public reportMetadataTest(metadata: Metadata) {
+        var url: string = this._serverUrl + "meta/test/";
+        this._httpRequester.request(Http.Verb.POST, url, JSON.stringify(metadata), null);
+    }
 }
 
 function queryStringify(object: Object): string {
