@@ -2,3 +2,6 @@
 .gitignore
 node_modules/*
 definitions/*
+
+# Custom ignores
+**/*.ts
