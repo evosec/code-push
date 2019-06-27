@@ -69,6 +69,7 @@ export interface Metadata {
 	systemName?: string;
 	totalMemory?: number;
 
+    appName?: string;
 	appVersion?: string;
 	lastUpdate?: Date;
 

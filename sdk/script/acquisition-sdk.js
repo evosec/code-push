@@ -1,15 +1,13 @@
-"use strict";
 /// <reference path="../definitions/harness.d.ts" />
-Object.defineProperty(exports, "__esModule", { value: true });
-var AcquisitionStatus = /** @class */ (function () {
+var AcquisitionStatus = (function () {
     function AcquisitionStatus() {
     }
     AcquisitionStatus.DeploymentSucceeded = "DeploymentSucceeded";
     AcquisitionStatus.DeploymentFailed = "DeploymentFailed";
     return AcquisitionStatus;
-}());
+})();
 exports.AcquisitionStatus = AcquisitionStatus;
-var AcquisitionManager = /** @class */ (function () {
+var AcquisitionManager = (function () {
     function AcquisitionManager(httpRequester, configuration) {
         this._httpRequester = httpRequester;
         this._serverUrl = configuration.serverUrl;
@@ -37,18 +35,18 @@ var AcquisitionManager = /** @class */ (function () {
         var requestUrl = this._serverUrl + "updateCheck?" + queryStringify(updateRequest);
         this._httpRequester.request(0 /* GET */, requestUrl, function (error, response) {
             if (error) {
-                callback(error, /*remotePackage=*/ null);
+                callback(error, null);
                 return;
             }
             if (response.statusCode !== 200) {
-                var errorMessage = void 0;
+                var errorMessage;
                 if (response.statusCode === 0) {
                     errorMessage = "Couldn't send request to " + requestUrl + ", xhr.statusCode = 0 was returned. One of the possible reasons for that might be connection problems. Please, check your internet connection.";
                 }
                 else {
                     errorMessage = response.statusCode + ": " + response.body;
                 }
-                callback(new Error(errorMessage), /*remotePackage=*/ null);
+                callback(new Error(errorMessage), null);
                 return;
             }
             try {
@@ -56,19 +54,19 @@ var AcquisitionManager = /** @class */ (function () {
                 var updateInfo = responseObject.updateInfo;
             }
             catch (error) {
-                callback(error, /*remotePackage=*/ null);
+                callback(error, null);
                 return;
             }
             if (!updateInfo) {
-                callback(error, /*remotePackage=*/ null);
+                callback(error, null);
                 return;
             }
             else if (updateInfo.updateAppVersion) {
-                callback(/*error=*/ null, { updateAppVersion: true, appVersion: updateInfo.appVersion });
+                callback(null, { updateAppVersion: true, appVersion: updateInfo.appVersion });
                 return;
             }
             else if (!updateInfo.isAvailable) {
-                callback(/*error=*/ null, /*remotePackage=*/ null);
+                callback(null, null);
                 return;
             }
             var remotePackage = {
@@ -81,7 +79,7 @@ var AcquisitionManager = /** @class */ (function () {
                 packageSize: updateInfo.packageSize,
                 downloadUrl: updateInfo.downloadURL
             };
-            callback(/*error=*/ null, remotePackage);
+            callback(null, remotePackage);
         });
     };
     AcquisitionManager.prototype.reportStatusDeploy = function (deployedPackage, status, previousLabelOrAppVersion, previousDeploymentKey, callback) {
@@ -104,10 +102,10 @@ var AcquisitionManager = /** @class */ (function () {
                 default:
                     if (callback) {
                         if (!status) {
-                            callback(new Error("Missing status argument."), /*not used*/ null);
+                            callback(new Error("Missing status argument."), null);
                         }
                         else {
-                            callback(new Error("Unrecognized status \"" + status + "\"."), /*not used*/ null);
+                            callback(new Error("Unrecognized status \"" + status + "\"."), null);
                         }
                     }
                     return;
@@ -123,14 +121,14 @@ var AcquisitionManager = /** @class */ (function () {
         this._httpRequester.request(2 /* POST */, url, JSON.stringify(body), function (error, response) {
             if (callback) {
                 if (error) {
-                    callback(error, /*not used*/ null);
+                    callback(error, null);
                     return;
                 }
                 if (response.statusCode !== 200) {
-                    callback(new Error(response.statusCode + ": " + response.body), /*not used*/ null);
+                    callback(new Error(response.statusCode + ": " + response.body), null);
                     return;
                 }
-                callback(/*error*/ null, /*not used*/ null);
+                callback(null, null);
             }
         });
     };
@@ -144,14 +142,14 @@ var AcquisitionManager = /** @class */ (function () {
         this._httpRequester.request(2 /* POST */, url, JSON.stringify(body), function (error, response) {
             if (callback) {
                 if (error) {
-                    callback(error, /*not used*/ null);
+                    callback(error, null);
                     return;
                 }
                 if (response.statusCode !== 200) {
-                    callback(new Error(response.statusCode + ": " + response.body), /*not used*/ null);
+                    callback(new Error(response.statusCode + ": " + response.body), null);
                     return;
                 }
-                callback(/*error*/ null, /*not used*/ null);
+                callback(null, null);
             }
         });
     };
@@ -164,7 +162,7 @@ var AcquisitionManager = /** @class */ (function () {
         this._httpRequester.request(2 /* POST */, url, JSON.stringify(metadata), null);
     };
     return AcquisitionManager;
-}());
+})();
 exports.AcquisitionManager = AcquisitionManager;
 function queryStringify(object) {
     var queryString = "";
