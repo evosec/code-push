@@ -16,7 +16,8 @@ export var latestPackage = <rest.UpdateCheckResponse>{
     isAvailable: true,
     updateAppVersion: false,
     packageHash: "hash240",
-    packageSize: 1024
+    packageSize: 1024,
+    rsaPublicKey: "4711"
 };
 
 export var serverUrl = "http://myurl.com";

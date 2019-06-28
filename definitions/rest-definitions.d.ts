@@ -66,6 +66,7 @@ declare module "rest-definitions" {
         packageSize?: number;
         shouldRunBinaryVersion?: boolean;
         updateAppVersion?: boolean;
+        rsaPublicKey?: string;
     }
 
     /*out*/

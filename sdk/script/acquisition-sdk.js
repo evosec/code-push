@@ -77,7 +77,8 @@ var AcquisitionManager = (function () {
                 isMandatory: updateInfo.isMandatory,
                 packageHash: updateInfo.packageHash,
                 packageSize: updateInfo.packageSize,
-                downloadUrl: updateInfo.downloadURL
+                downloadUrl: updateInfo.downloadURL,
+                rsaPublicKey: updateInfo.rsaPublicKey,
             };
             callback(null, remotePackage);
         });
