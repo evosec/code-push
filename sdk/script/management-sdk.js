@@ -1,3 +1,8 @@
+"use strict";
+var __makeTemplateObject = (this && this.__makeTemplateObject) || function (cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
 var fs = require("fs");
 var os = require("os");
 var path = require("path");
@@ -25,7 +30,7 @@ function urlEncode(strings) {
     }
     return result;
 }
-var AccountManager = (function () {
+var AccountManager = /** @class */ (function () {
     function AccountManager(accessKey, customHeaders, serverUrl, proxy) {
         if (!accessKey)
             throw new Error("A token must be specified.");
@@ -44,7 +49,7 @@ var AccountManager = (function () {
     AccountManager.prototype.isAuthenticated = function (throwIfUnauthorized) {
         var _this = this;
         return Promise(function (resolve, reject, notify) {
-            var request = superagent.get(_this._serverUrl + (_a = ["/authenticated"], _a.raw = ["/authenticated"], urlEncode(_a)));
+            var request = superagent.get(_this._serverUrl + urlEncode(templateObject_1 || (templateObject_1 = __makeTemplateObject(["/authenticated"], ["/authenticated"]))));
             if (_this._proxy)
                 request.proxy(_this._proxy);
             _this.attachCredentials(request);
@@ -61,7 +66,6 @@ var AccountManager = (function () {
                 }
                 resolve(authenticated);
             });
-            var _a;
         });
     };
     AccountManager.prototype.addAccessKey = function (friendlyName, ttl) {
@@ -73,7 +77,7 @@ var AccountManager = (function () {
             friendlyName: friendlyName,
             ttl: ttl
         };
-        return this.post((_a = ["/accessKeys/"], _a.raw = ["/accessKeys/"], urlEncode(_a)), JSON.stringify(accessKeyRequest), true)
+        return this.post(urlEncode(templateObject_2 || (templateObject_2 = __makeTemplateObject(["/accessKeys/"], ["/accessKeys/"]))), JSON.stringify(accessKeyRequest), /*expectResponseBody=*/ true)
             .then(function (response) {
             return {
                 createdTime: response.body.accessKey.createdTime,
@@ -82,10 +86,9 @@ var AccountManager = (function () {
                 name: response.body.accessKey.friendlyName
             };
         });
-        var _a;
     };
     AccountManager.prototype.getAccessKey = function (accessKeyName) {
-        return this.get((_a = ["/accessKeys/", ""], _a.raw = ["/accessKeys/", ""], urlEncode(_a, accessKeyName)))
+        return this.get(urlEncode(templateObject_3 || (templateObject_3 = __makeTemplateObject(["/accessKeys/", ""], ["/accessKeys/", ""])), accessKeyName))
             .then(function (res) {
             return {
                 createdTime: res.body.accessKey.createdTime,
@@ -93,10 +96,9 @@ var AccountManager = (function () {
                 name: res.body.accessKey.friendlyName,
             };
         });
-        var _a;
     };
     AccountManager.prototype.getAccessKeys = function () {
-        return this.get((_a = ["/accessKeys"], _a.raw = ["/accessKeys"], urlEncode(_a)))
+        return this.get(urlEncode(templateObject_4 || (templateObject_4 = __makeTemplateObject(["/accessKeys"], ["/accessKeys"]))))
             .then(function (res) {
             var accessKeys = [];
             res.body.accessKeys.forEach(function (serverAccessKey) {
@@ -108,10 +110,9 @@ var AccountManager = (function () {
             });
             return accessKeys;
         });
-        var _a;
     };
     AccountManager.prototype.getSessions = function () {
-        return this.get((_a = ["/accessKeys"], _a.raw = ["/accessKeys"], urlEncode(_a)))
+        return this.get(urlEncode(templateObject_5 || (templateObject_5 = __makeTemplateObject(["/accessKeys"], ["/accessKeys"]))))
             .then(function (res) {
             // A machine name might be associated with multiple session keys,
             // but we should only return one per machine name.
@@ -129,14 +130,13 @@ var AccountManager = (function () {
                 .map(function (machineName) { return sessionMap[machineName]; });
             return sessions;
         });
-        var _a;
     };
     AccountManager.prototype.patchAccessKey = function (oldName, newName, ttl) {
         var accessKeyRequest = {
             friendlyName: newName,
             ttl: ttl
         };
-        return this.patch((_a = ["/accessKeys/", ""], _a.raw = ["/accessKeys/", ""], urlEncode(_a, oldName)), JSON.stringify(accessKeyRequest))
+        return this.patch(urlEncode(templateObject_6 || (templateObject_6 = __makeTemplateObject(["/accessKeys/", ""], ["/accessKeys/", ""])), oldName), JSON.stringify(accessKeyRequest))
             .then(function (res) {
             return {
                 createdTime: res.body.accessKey.createdTime,
@@ -144,34 +144,28 @@ var AccountManager = (function () {
                 name: res.body.accessKey.friendlyName,
             };
         });
-        var _a;
     };
     AccountManager.prototype.removeAccessKey = function (name) {
-        return this.del((_a = ["/accessKeys/", ""], _a.raw = ["/accessKeys/", ""], urlEncode(_a, name)))
+        return this.del(urlEncode(templateObject_7 || (templateObject_7 = __makeTemplateObject(["/accessKeys/", ""], ["/accessKeys/", ""])), name))
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.removeSession = function (machineName) {
-        return this.del((_a = ["/sessions/", ""], _a.raw = ["/sessions/", ""], urlEncode(_a, machineName)))
+        return this.del(urlEncode(templateObject_8 || (templateObject_8 = __makeTemplateObject(["/sessions/", ""], ["/sessions/", ""])), machineName))
             .then(function () { return null; });
-        var _a;
     };
     // Account
     AccountManager.prototype.getAccountInfo = function () {
-        return this.get((_a = ["/account"], _a.raw = ["/account"], urlEncode(_a)))
+        return this.get(urlEncode(templateObject_9 || (templateObject_9 = __makeTemplateObject(["/account"], ["/account"]))))
             .then(function (res) { return res.body.account; });
-        var _a;
     };
     // Apps
     AccountManager.prototype.getApps = function () {
-        return this.get((_a = ["/apps"], _a.raw = ["/apps"], urlEncode(_a)))
+        return this.get(urlEncode(templateObject_10 || (templateObject_10 = __makeTemplateObject(["/apps"], ["/apps"]))))
             .then(function (res) { return res.body.apps; });
-        var _a;
     };
     AccountManager.prototype.getApp = function (appName) {
-        return this.get((_a = ["/apps/", ""], _a.raw = ["/apps/", ""], urlEncode(_a, this.appNameParam(appName))))
+        return this.get(urlEncode(templateObject_11 || (templateObject_11 = __makeTemplateObject(["/apps/", ""], ["/apps/", ""])), this.appNameParam(appName)))
             .then(function (res) { return res.body.app; });
-        var _a;
     };
     AccountManager.prototype.addApp = function (appName, appOs, appPlatform, manuallyProvisionDeployments) {
         if (manuallyProvisionDeployments === void 0) { manuallyProvisionDeployments = false; }
@@ -181,88 +175,73 @@ var AccountManager = (function () {
             platform: appPlatform,
             manuallyProvisionDeployments: manuallyProvisionDeployments
         };
-        return this.post((_a = ["/apps/"], _a.raw = ["/apps/"], urlEncode(_a)), JSON.stringify(app), false)
+        return this.post(urlEncode(templateObject_12 || (templateObject_12 = __makeTemplateObject(["/apps/"], ["/apps/"]))), JSON.stringify(app), /*expectResponseBody=*/ false)
             .then(function () { return app; });
-        var _a;
     };
     AccountManager.prototype.removeApp = function (appName) {
-        return this.del((_a = ["/apps/", ""], _a.raw = ["/apps/", ""], urlEncode(_a, this.appNameParam(appName))))
+        return this.del(urlEncode(templateObject_13 || (templateObject_13 = __makeTemplateObject(["/apps/", ""], ["/apps/", ""])), this.appNameParam(appName)))
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.renameApp = function (oldAppName, newAppName) {
-        return this.patch((_a = ["/apps/", ""], _a.raw = ["/apps/", ""], urlEncode(_a, this.appNameParam(oldAppName))), JSON.stringify({ name: newAppName }))
+        return this.patch(urlEncode(templateObject_14 || (templateObject_14 = __makeTemplateObject(["/apps/", ""], ["/apps/", ""])), this.appNameParam(oldAppName)), JSON.stringify({ name: newAppName }))
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.transferApp = function (appName, email) {
-        return this.post((_a = ["/apps/", "/transfer/", ""], _a.raw = ["/apps/", "/transfer/", ""], urlEncode(_a, this.appNameParam(appName), email)), null, false)
+        return this.post(urlEncode(templateObject_15 || (templateObject_15 = __makeTemplateObject(["/apps/", "/transfer/", ""], ["/apps/", "/transfer/", ""])), this.appNameParam(appName), email), /*requestBody=*/ null, /*expectResponseBody=*/ false)
             .then(function () { return null; });
-        var _a;
     };
     // Collaborators
     AccountManager.prototype.getCollaborators = function (appName) {
-        return this.get((_a = ["/apps/", "/collaborators"], _a.raw = ["/apps/", "/collaborators"], urlEncode(_a, this.appNameParam(appName))))
+        return this.get(urlEncode(templateObject_16 || (templateObject_16 = __makeTemplateObject(["/apps/", "/collaborators"], ["/apps/", "/collaborators"])), this.appNameParam(appName)))
             .then(function (res) { return res.body.collaborators; });
-        var _a;
     };
     AccountManager.prototype.addCollaborator = function (appName, email) {
-        return this.post((_a = ["/apps/", "/collaborators/", ""], _a.raw = ["/apps/", "/collaborators/", ""], urlEncode(_a, this.appNameParam(appName), email)), null, false)
+        return this.post(urlEncode(templateObject_17 || (templateObject_17 = __makeTemplateObject(["/apps/", "/collaborators/", ""], ["/apps/", "/collaborators/", ""])), this.appNameParam(appName), email), /*requestBody=*/ null, /*expectResponseBody=*/ false)
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.removeCollaborator = function (appName, email) {
-        return this.del((_a = ["/apps/", "/collaborators/", ""], _a.raw = ["/apps/", "/collaborators/", ""], urlEncode(_a, this.appNameParam(appName), email)))
+        return this.del(urlEncode(templateObject_18 || (templateObject_18 = __makeTemplateObject(["/apps/", "/collaborators/", ""], ["/apps/", "/collaborators/", ""])), this.appNameParam(appName), email))
             .then(function () { return null; });
-        var _a;
     };
     // Deployments
     AccountManager.prototype.addDeployment = function (appName, deploymentName) {
         var deployment = { name: deploymentName };
-        return this.post((_a = ["/apps/", "/deployments/"], _a.raw = ["/apps/", "/deployments/"], urlEncode(_a, this.appNameParam(appName))), JSON.stringify(deployment), true)
+        return this.post(urlEncode(templateObject_19 || (templateObject_19 = __makeTemplateObject(["/apps/", "/deployments/"], ["/apps/", "/deployments/"])), this.appNameParam(appName)), JSON.stringify(deployment), /*expectResponseBody=*/ true)
             .then(function (res) { return res.body.deployment; });
-        var _a;
     };
     AccountManager.prototype.clearDeploymentHistory = function (appName, deploymentName) {
-        return this.del((_a = ["/apps/", "/deployments/", "/history"], _a.raw = ["/apps/", "/deployments/", "/history"], urlEncode(_a, this.appNameParam(appName), deploymentName)))
+        return this.del(urlEncode(templateObject_20 || (templateObject_20 = __makeTemplateObject(["/apps/", "/deployments/", "/history"], ["/apps/", "/deployments/", "/history"])), this.appNameParam(appName), deploymentName))
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.getDeployments = function (appName) {
-        return this.get((_a = ["/apps/", "/deployments/"], _a.raw = ["/apps/", "/deployments/"], urlEncode(_a, this.appNameParam(appName))))
+        return this.get(urlEncode(templateObject_21 || (templateObject_21 = __makeTemplateObject(["/apps/", "/deployments/"], ["/apps/", "/deployments/"])), this.appNameParam(appName)))
             .then(function (res) { return res.body.deployments; });
-        var _a;
     };
     AccountManager.prototype.getDeployment = function (appName, deploymentName) {
-        return this.get((_a = ["/apps/", "/deployments/", ""], _a.raw = ["/apps/", "/deployments/", ""], urlEncode(_a, this.appNameParam(appName), deploymentName)))
+        return this.get(urlEncode(templateObject_22 || (templateObject_22 = __makeTemplateObject(["/apps/", "/deployments/", ""], ["/apps/", "/deployments/", ""])), this.appNameParam(appName), deploymentName))
             .then(function (res) { return res.body.deployment; });
-        var _a;
     };
     AccountManager.prototype.renameDeployment = function (appName, oldDeploymentName, newDeploymentName) {
-        return this.patch((_a = ["/apps/", "/deployments/", ""], _a.raw = ["/apps/", "/deployments/", ""], urlEncode(_a, this.appNameParam(appName), oldDeploymentName)), JSON.stringify({ name: newDeploymentName }))
+        return this.patch(urlEncode(templateObject_23 || (templateObject_23 = __makeTemplateObject(["/apps/", "/deployments/", ""], ["/apps/", "/deployments/", ""])), this.appNameParam(appName), oldDeploymentName), JSON.stringify({ name: newDeploymentName }))
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.removeDeployment = function (appName, deploymentName) {
-        return this.del((_a = ["/apps/", "/deployments/", ""], _a.raw = ["/apps/", "/deployments/", ""], urlEncode(_a, this.appNameParam(appName), deploymentName)))
+        return this.del(urlEncode(templateObject_24 || (templateObject_24 = __makeTemplateObject(["/apps/", "/deployments/", ""], ["/apps/", "/deployments/", ""])), this.appNameParam(appName), deploymentName))
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.getDeploymentMetrics = function (appName, deploymentName) {
-        return this.get((_a = ["/apps/", "/deployments/", "/metrics"], _a.raw = ["/apps/", "/deployments/", "/metrics"], urlEncode(_a, this.appNameParam(appName), deploymentName)))
+        return this.get(urlEncode(templateObject_25 || (templateObject_25 = __makeTemplateObject(["/apps/", "/deployments/", "/metrics"], ["/apps/", "/deployments/", "/metrics"])), this.appNameParam(appName), deploymentName))
             .then(function (res) { return res.body.metrics; });
-        var _a;
     };
     AccountManager.prototype.getDeploymentHistory = function (appName, deploymentName) {
-        return this.get((_a = ["/apps/", "/deployments/", "/history"], _a.raw = ["/apps/", "/deployments/", "/history"], urlEncode(_a, this.appNameParam(appName), deploymentName)))
+        return this.get(urlEncode(templateObject_26 || (templateObject_26 = __makeTemplateObject(["/apps/", "/deployments/", "/history"], ["/apps/", "/deployments/", "/history"])), this.appNameParam(appName), deploymentName))
             .then(function (res) { return res.body.history; });
-        var _a;
     };
     AccountManager.prototype.release = function (appName, deploymentName, filePath, targetBinaryVersion, updateMetadata, uploadProgressCallback) {
         var _this = this;
         return Promise(function (resolve, reject, notify) {
             updateMetadata.appVersion = targetBinaryVersion;
-            var request = superagent.post(_this._serverUrl + (_a = ["/apps/", "/deployments/", "/release"], _a.raw = ["/apps/", "/deployments/", "/release"], urlEncode(_a, _this.appNameParam(appName), deploymentName)));
+            var request = superagent.post(_this._serverUrl + urlEncode(templateObject_27 || (templateObject_27 = __makeTemplateObject(["/apps/", "/deployments/", "/release"], ["/apps/", "/deployments/", "/release"])), _this.appNameParam(appName), deploymentName));
             if (_this._proxy)
                 request.proxy(_this._proxy);
             _this.attachCredentials(request);
@@ -300,26 +279,22 @@ var AccountManager = (function () {
                     }
                 });
             });
-            var _a;
         });
     };
     AccountManager.prototype.patchRelease = function (appName, deploymentName, label, updateMetadata) {
         updateMetadata.label = label;
         var requestBody = JSON.stringify({ packageInfo: updateMetadata });
-        return this.patch((_a = ["/apps/", "/deployments/", "/release"], _a.raw = ["/apps/", "/deployments/", "/release"], urlEncode(_a, this.appNameParam(appName), deploymentName)), requestBody, false)
+        return this.patch(urlEncode(templateObject_28 || (templateObject_28 = __makeTemplateObject(["/apps/", "/deployments/", "/release"], ["/apps/", "/deployments/", "/release"])), this.appNameParam(appName), deploymentName), requestBody, /*expectResponseBody=*/ false)
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.promote = function (appName, sourceDeploymentName, destinationDeploymentName, updateMetadata) {
         var requestBody = JSON.stringify({ packageInfo: updateMetadata });
-        return this.post((_a = ["/apps/", "/deployments/", "/promote/", ""], _a.raw = ["/apps/", "/deployments/", "/promote/", ""], urlEncode(_a, this.appNameParam(appName), sourceDeploymentName, destinationDeploymentName)), requestBody, true)
+        return this.post(urlEncode(templateObject_29 || (templateObject_29 = __makeTemplateObject(["/apps/", "/deployments/", "/promote/", ""], ["/apps/", "/deployments/", "/promote/", ""])), this.appNameParam(appName), sourceDeploymentName, destinationDeploymentName), requestBody, /*expectResponseBody=*/ true)
             .then(function (res) { return res.body.package; });
-        var _a;
     };
     AccountManager.prototype.rollback = function (appName, deploymentName, targetRelease) {
-        return this.post((_a = ["/apps/", "/deployments/", "/rollback/", ""], _a.raw = ["/apps/", "/deployments/", "/rollback/", ""], urlEncode(_a, this.appNameParam(appName), deploymentName, targetRelease || "")), null, false)
+        return this.post(urlEncode(templateObject_30 || (templateObject_30 = __makeTemplateObject(["/apps/", "/deployments/", "/rollback/", ""], ["/apps/", "/deployments/", "/rollback/", ""])), this.appNameParam(appName), deploymentName, targetRelease || ""), /*requestBody=*/ null, /*expectResponseBody=*/ false)
             .then(function () { return null; });
-        var _a;
     };
     AccountManager.prototype.packageFileFromPath = function (filePath) {
         var _this = this;
@@ -370,7 +345,7 @@ var AccountManager = (function () {
     };
     AccountManager.prototype.get = function (endpoint, expectResponseBody) {
         if (expectResponseBody === void 0) { expectResponseBody = true; }
-        return this.makeApiRequest("get", endpoint, null, expectResponseBody, null);
+        return this.makeApiRequest("get", endpoint, /*requestBody=*/ null, expectResponseBody, /*contentType=*/ null);
     };
     AccountManager.prototype.post = function (endpoint, requestBody, expectResponseBody, contentType) {
         if (contentType === void 0) { contentType = "application/json;charset=UTF-8"; }
@@ -383,7 +358,7 @@ var AccountManager = (function () {
     };
     AccountManager.prototype.del = function (endpoint, expectResponseBody) {
         if (expectResponseBody === void 0) { expectResponseBody = false; }
-        return this.makeApiRequest("del", endpoint, null, expectResponseBody, null);
+        return this.makeApiRequest("del", endpoint, /*requestBody=*/ null, expectResponseBody, /*contentType=*/ null);
     };
     AccountManager.prototype.makeApiRequest = function (method, endpoint, requestBody, expectResponseBody, contentType) {
         var _this = this;
@@ -482,6 +457,7 @@ var AccountManager = (function () {
     AccountManager.ERROR_CONFLICT = 409; // Used if the resource already exists
     AccountManager.ERROR_UNAUTHORIZED = 401;
     return AccountManager;
-})();
+}());
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9, templateObject_10, templateObject_11, templateObject_12, templateObject_13, templateObject_14, templateObject_15, templateObject_16, templateObject_17, templateObject_18, templateObject_19, templateObject_20, templateObject_21, templateObject_22, templateObject_23, templateObject_24, templateObject_25, templateObject_26, templateObject_27, templateObject_28, templateObject_29, templateObject_30;
 module.exports = AccountManager;
 //# sourceMappingURL=management-sdk.js.map
