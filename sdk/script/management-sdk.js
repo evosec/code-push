@@ -448,7 +448,7 @@ var AccountManager = /** @class */ (function () {
         OWNER: "Owner",
         COLLABORATOR: "Collaborator"
     };
-    AccountManager.SERVER_URL = "https://codepush-management.azurewebsites.net";
+    AccountManager.SERVER_URL = "https://code-push-server.evosec.de/code-push-server/";
     AccountManager.MOBILE_CENTER_SERVER_URL = "https://mobile.azure.com";
     AccountManager.API_VERSION = 2;
     AccountManager.ERROR_GATEWAY_TIMEOUT = 504; // Used if there is a network error
