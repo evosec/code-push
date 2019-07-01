@@ -35,8 +35,7 @@ var scriptUpdateResult: acquisitionSdk.RemotePackage = {
     appVersion: latestPackage.appVersion,
     isMandatory: latestPackage.isMandatory,
     packageHash: latestPackage.packageHash,
-    packageSize: latestPackage.packageSize,
-    rsaPublicKey: latestPackage.rsaPublicKey
+    packageSize: latestPackage.packageSize
 };
 
 var nativeUpdateResult: acquisitionSdk.NativeUpdateNotification = {

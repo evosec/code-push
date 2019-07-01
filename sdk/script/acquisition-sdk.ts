@@ -32,7 +32,6 @@ export interface Package {
 
 export interface RemotePackage extends Package {
     downloadUrl: string;
-    rsaPublicKey: string;
 }
 
 export interface NativeUpdateNotification {
@@ -177,8 +176,7 @@ export class AcquisitionManager {
                 isMandatory: updateInfo.isMandatory,
                 packageHash: updateInfo.packageHash,
                 packageSize: updateInfo.packageSize,
-                downloadUrl: updateInfo.downloadURL,
-                rsaPublicKey: updateInfo.rsaPublicKey,
+                downloadUrl: updateInfo.downloadURL
             };
 
             callback(/*error=*/ null, remotePackage);
