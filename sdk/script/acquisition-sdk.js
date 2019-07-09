@@ -159,9 +159,38 @@ var AcquisitionManager = /** @class */ (function () {
         var url = this._serverUrl + "meta/";
         this._httpRequester.request(2 /* POST */, url, JSON.stringify(metadata), null);
     };
-    AcquisitionManager.prototype.reportMetadataTest = function (metadata) {
+    AcquisitionManager.prototype.reportMetadataTest = function (metadataAES) {
         var url = this._serverUrl + "meta/test/";
-        this._httpRequester.request(2 /* POST */, url, JSON.stringify(metadata), null);
+        this._httpRequester.request(2 /* POST */, url, JSON.stringify(metadataAES), null);
+    };
+    AcquisitionManager.prototype.downloadRSAKey = function (callback) {
+        var requestUrl = this._serverUrl + "downloadPublicKey/";
+        this._httpRequester.request(0 /* GET */, requestUrl, function (error, response) {
+            if (error) {
+                callback(error, /*RSAPublicKey=*/ null);
+                return;
+            }
+            if (response.statusCode !== 200) {
+                var errorMessage = void 0;
+                if (response.statusCode === 0) {
+                    errorMessage = "Couldn't send request to " + requestUrl + ", xhr.statusCode = 0 was returned. One of the possible reasons for that might be connection problems. Please, check your internet connection.";
+                }
+                else {
+                    errorMessage = response.statusCode + ": " + response.body;
+                }
+                callback(new Error(errorMessage), /*RSAPublicKey=*/ null);
+                return;
+            }
+            try {
+                var responseObject = response.body;
+                var fileContent = { fileContent: responseObject };
+            }
+            catch (error) {
+                callback(error, /*RSAPublicKey=*/ null);
+                return;
+            }
+            callback(/*error=*/ null, fileContent);
+        });
     };
     return AcquisitionManager;
 }());

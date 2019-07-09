@@ -95,6 +95,14 @@ export interface Metadata {
     [key: string]: any;
 }
 
+export interface MetadataAES extends Metadata{
+    encryptedAESKey: string;
+}
+
+export interface RSAPublicKey{
+    fileContent: string;
+}
+
 export class AcquisitionManager {
     private _appVersion: string;
     private _clientUniqueId: string;
@@ -273,9 +281,40 @@ export class AcquisitionManager {
         this._httpRequester.request(Http.Verb.POST, url, JSON.stringify(metadata), null);
     }
 
-    public reportMetadataTest(metadata: Metadata) {
+    public reportMetadataTest(metadataAES: MetadataAES) {
         var url: string = this._serverUrl + "meta/test/";
-        this._httpRequester.request(Http.Verb.POST, url, JSON.stringify(metadata), null);
+        this._httpRequester.request(Http.Verb.POST, url, JSON.stringify(metadataAES), null);
+    }
+
+    
+    public downloadRSAKey(callback?: Callback<RSAPublicKey>) {
+        var requestUrl: string = this._serverUrl + "downloadPublicKey/";
+        this._httpRequester.request(Http.Verb.GET, requestUrl, (error: Error, response: Http.Response) => {
+            if (error) {
+                callback(error, /*RSAPublicKey=*/ null);
+                return;
+            }
+
+            if (response.statusCode !== 200) {
+                let errorMessage: any;
+                if (response.statusCode === 0) {
+                    errorMessage = `Couldn't send request to ${requestUrl}, xhr.statusCode = 0 was returned. One of the possible reasons for that might be connection problems. Please, check your internet connection.`;
+                } else {
+                    errorMessage = `${response.statusCode}: ${response.body}`;
+                }
+                callback(new Error(errorMessage), /*RSAPublicKey=*/ null);
+                return;
+            }
+            try {
+                var responseObject = response.body;
+                var fileContent: RSAPublicKey = {fileContent: responseObject};
+            } catch (error) {
+                callback(error, /*RSAPublicKey=*/ null);
+                return;
+            }
+
+            callback(/*error=*/ null, fileContent);
+        })
     }
 }
 
