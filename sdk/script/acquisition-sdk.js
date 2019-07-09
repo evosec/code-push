@@ -183,13 +183,13 @@ var AcquisitionManager = /** @class */ (function () {
             }
             try {
                 var responseObject = response.body;
-                var fileContent = { fileContent: responseObject };
+                var rsaPublicKey = { rsaPublicKey: responseObject };
+                callback(/*error=*/ null, rsaPublicKey);
             }
             catch (error) {
                 callback(error, /*RSAPublicKey=*/ null);
                 return;
             }
-            callback(/*error=*/ null, fileContent);
         });
     };
     return AcquisitionManager;

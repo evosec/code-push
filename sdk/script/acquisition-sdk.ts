@@ -100,7 +100,7 @@ export interface MetadataAES extends Metadata{
 }
 
 export interface RSAPublicKey{
-    fileContent: string;
+    rsaPublicKey: string;
 }
 
 export class AcquisitionManager {
@@ -307,13 +307,12 @@ export class AcquisitionManager {
             }
             try {
                 var responseObject = response.body;
-                var fileContent: RSAPublicKey = {fileContent: responseObject};
+                var rsaPublicKey: RSAPublicKey = {rsaPublicKey: responseObject};
+                callback(/*error=*/ null, rsaPublicKey);
             } catch (error) {
                 callback(error, /*RSAPublicKey=*/ null);
                 return;
             }
-
-            callback(/*error=*/ null, fileContent);
         })
     }
 }
