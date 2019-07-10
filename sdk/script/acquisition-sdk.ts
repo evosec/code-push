@@ -99,8 +99,8 @@ export interface MetadataAES extends Metadata{
     encryptedAESKey: string;
 }
 
-export interface RSAPublicKey{
-    rsaPublicKey: string;
+export interface RSAKey{
+    publicKey: string;
 }
 
 export class AcquisitionManager {
@@ -287,11 +287,11 @@ export class AcquisitionManager {
     }
 
     
-    public downloadRSAKey(callback?: Callback<RSAPublicKey>) {
+    public downloadRSAKey(callback?: Callback<RSAKey>) {
         var requestUrl: string = this._serverUrl + "downloadPublicKey/";
         this._httpRequester.request(Http.Verb.GET, requestUrl, (error: Error, response: Http.Response) => {
             if (error) {
-                callback(error, /*RSAPublicKey=*/ null);
+                callback(error, /*RSAKey=*/ null);
                 return;
             }
 
@@ -302,15 +302,15 @@ export class AcquisitionManager {
                 } else {
                     errorMessage = `${response.statusCode}: ${response.body}`;
                 }
-                callback(new Error(errorMessage), /*RSAPublicKey=*/ null);
+                callback(new Error(errorMessage), /*RSAKey=*/ null);
                 return;
             }
             try {
                 var responseObject = response.body;
-                var rsaPublicKey: RSAPublicKey = {rsaPublicKey: responseObject};
-                callback(/*error=*/ null, rsaPublicKey);
+                var publicKey: RSAKey = {publicKey: responseObject};
+                callback(/*error=*/ null, publicKey);
             } catch (error) {
-                callback(error, /*RSAPublicKey=*/ null);
+                callback(error, /*RSAKey=*/ null);
                 return;
             }
         })

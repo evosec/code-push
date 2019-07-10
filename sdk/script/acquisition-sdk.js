@@ -167,7 +167,7 @@ var AcquisitionManager = /** @class */ (function () {
         var requestUrl = this._serverUrl + "downloadPublicKey/";
         this._httpRequester.request(0 /* GET */, requestUrl, function (error, response) {
             if (error) {
-                callback(error, /*RSAPublicKey=*/ null);
+                callback(error, /*RSAKey=*/ null);
                 return;
             }
             if (response.statusCode !== 200) {
@@ -178,16 +178,16 @@ var AcquisitionManager = /** @class */ (function () {
                 else {
                     errorMessage = response.statusCode + ": " + response.body;
                 }
-                callback(new Error(errorMessage), /*RSAPublicKey=*/ null);
+                callback(new Error(errorMessage), /*RSAKey=*/ null);
                 return;
             }
             try {
                 var responseObject = response.body;
-                var rsaPublicKey = { rsaPublicKey: responseObject };
-                callback(/*error=*/ null, rsaPublicKey);
+                var publicKey = { publicKey: responseObject };
+                callback(/*error=*/ null, publicKey);
             }
             catch (error) {
-                callback(error, /*RSAPublicKey=*/ null);
+                callback(error, /*RSAKey=*/ null);
                 return;
             }
         });
