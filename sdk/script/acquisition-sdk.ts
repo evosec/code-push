@@ -97,6 +97,7 @@ export interface Metadata {
 
 export interface MetadataAES extends Metadata{
     encryptedAESKey: string;
+    iv: string;
 }
 
 export interface RSAKey{
